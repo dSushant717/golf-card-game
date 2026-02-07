@@ -1,0 +1,18 @@
+# node
+node_modules
+npm-debug.log*
+package-lock.json
+
+# env
+.env
+.env.*
+
+# build outputs
+dist
+build
+
+# vite
+.vite
+
+# misc
+.DS_Store
