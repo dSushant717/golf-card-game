@@ -6,8 +6,12 @@ const httpServer = createServer((req, res) => {
     res.end("OK");
 });
 
+const allowedOrigins = (process.env.CLIENT_ORIGIN || "http://localhost:5173")
+    .split(",")
+    .map(s => s.trim());
+
 const io = new Server(httpServer, {
-    cors: { origin: "http://localhost:5173" }
+    cors: { origin: allowedOrigins }
 });
 
 // roomCode -> { code, players: [{id,name,ready}] }
@@ -38,7 +42,7 @@ function tryStartGame(room) {
 
     // before dealing
     for (const p of room.players) {
-    p.hand = [];
+        p.hand = [];
     }
 
     // deal 4 cards to each player
@@ -153,6 +157,7 @@ io.on("connection", (socket) => {
     });
 });
 
-httpServer.listen(4000, () => {
-    console.log("server running on http://localhost:4000");
+const PORT = process.env.PORT || 4000;
+httpServer.listen(PORT, () => {
+  console.log(`server running on http://localhost:${PORT}`);
 });
