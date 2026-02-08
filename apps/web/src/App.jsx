@@ -105,6 +105,12 @@ export default function App() {
     socket.on("game:picked", onPicked);
     socket.on("round:ended", onRoundEnded);
 
+    console.log("Server URL:", import.meta.env.VITE_SERVER_URL);
+
+socket.on("connect", () => console.log("✅ connected", socket.id));
+socket.on("connect_error", (e) => console.log("❌ connect_error", e.message));
+socket.on("disconnect", (r) => console.log("⚠️ disconnected", r));
+
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
